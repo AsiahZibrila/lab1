@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Books{% endblock %}</h2>
+  {% if g.user %}
+    <a class="action" href="{#{ url_for('book.review') }#}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if books %}
+	{% for book in books %}
+		<h5><a  class="action" href="{{ url_for('books.book_detail', isbn=book[0]) }}">(ISBN: {{ book[0] }}) - Title: {{ book[1]}} - [Written by: {{ book[2]}}]</a></h5>
+    <hr>
+  {% endfor %}
+{% endif %}
+
+{% if bookSearch %}
+<h3>Search Results for "{{ param }}":</h3>
+	{% for book in bookSearch %}
+		<h5><a  class="action" href="{{ url_for('books.book_detail', isbn=book[0]) }}">(ISBN: {{ book[0] }}) - Title: {{ book[1]}} - [Written by: {{ book[2]}}]</a></h5>
+    <hr>
+  {% endfor %}
+{% else %}
+
+{% endif %}
+  
+{% endblock %}

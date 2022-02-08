@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='base_main.css') }}">
+
+</head>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4
+mb-3 border-bottom shadow-sm navbar-light">
+
+  <a href="{{ url_for('books.index') }}" class="navbar-brand my-0 mr-md-auto
+  font-weight-bold"><h2>Home</h2></a> 
+  <a class="btn btn-outline-success" href="{{ url_for('api.api') }}"><h2>BooksAPI</h2></a>
+  {% block search %}
+<!--div>
+    <form class="example" method="post" action="" style="margin:auto;max-width:1000px">
+      <input type="text" placeholder="Search by ISBN, Title, Author..." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+
+    </form>
+</div-->
+    {% endblock %}
+<nav>
+
+    {% if g.person %}
+      <span>Logged in as: {{ g.person[1] }}</span>
+      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Log Out</a>
+    {% else %}
+      <a class="btn btn-outline-primary" href="{{ url_for('auth.register') }}">Register</a>
+      <a class="btn btn-outline-primary" href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+
+</nav>
+</div>
+
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
+
+</html>

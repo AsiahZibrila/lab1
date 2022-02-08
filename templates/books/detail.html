@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>{% block title %}Title: {{ book[1] }} {% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+
+{% if book %}
+        <p><b>Author:</b> {{ book[2] }}</p>
+        <p><b>ISBN:</b> {{ book[0] }}</p>
+        <p><b>Year Published:</b> {{ book[3] }}</p>
+        <hr>
+        <h5><b>Reviews</h5>
+        <hr>
+        {% if reviews %}
+          {% for review in reviews %}
+              {% if uname %}
+           <h6><b> Reviewed by: {{ uname[0][0] }}</b></h6>
+              {% endif %}
+        <p><h7>Rating for this review: {{ review[1] }}</h7></p>
+           <p>{{ review[0] }}</p>
+           <hr>
+          {% endfor %}
+        {% else %}
+        <p>There no reviews for this book yet...be the first to rate it.</p>
+        {% endif %}
+{% endif %}
+
+
+{% if message %}
+<p class="message">{{ message | safe }}</p>
+{% endif %}
+<form method="POST">
+    <h3>Please rate "{{ book[1] }}" </h3>
+    <input type="radio" name="rating" value="1" name="rating" /> 1
+    <input type="radio" name="rating" value="2" name="rating" /> 2
+    <input type="radio" name="rating" value="3" name="rating" /> 3
+    <input type="radio" name="rating" value="4" name="rating" /> 4
+    <input type="radio" name="rating" value="5" name="rating" /> 5
+
+    <h3>Review Comments</h3>
+    <textarea
+      name="comments"
+      id=""
+      cols="80"
+      rows="10"
+      placeholder="Say something about this book">{{ request.form['comments'] }}</textarea>
+      <input type="submit" value="Save"  class="btn btn-success">
+
+</form>
+<hr>
+
+{% endblock %}
